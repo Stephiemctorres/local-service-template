@@ -1,0 +1,122 @@
+---
+title: "[SERVICE CATEGORY] Services | [SERVICE AREA] | [BUSINESS NAME]"
+description: "[BUSINESS NAME] provides [SERVICE CATEGORY] across [SERVICE AREA]. [ACCESSIBILITY/SERVICE NOTE]."
+permalink: "/services/"
+tags: "sitemap"
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/services.css">
+{% endblock %}
+
+{% block body %}
+
+    <!-- ============================================ -->
+    <!--                 Page Hero                     -->
+    <!-- ============================================ -->
+    <section id="services-hero" class="cs-wrapper">
+        <span class="cs-topper">What We Offer</span>
+        <h1>[SERVICE CATEGORY] Services</h1>
+        <p class="cs-subtext">Serving {{ client.address.lineOne }}.</p>
+        <a href="tel:{{ client.phoneForTel }}" class="cs-phone">{{ client.phoneFormatted }}</a>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              Service Sections                 -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/services.js. Any
+        number of full service articles; each renders its own body
+        paragraphs, optional bullets, an optional note, and a CTA. This is
+        the same data source the home page's teaser cards pull from, so the
+        two pages never drift out of sync with each other.
+
+        Note: a per-client recurring-discount or loyalty-program paragraph
+        (the original NEMT build had one) is intentionally NOT part of this
+        data structure — that's documented as a reusable PATTERN in
+        pattern-notes/recurring-discount-program.md rather than baked into
+        every service's data, since it's an occasional business-model choice,
+        not a universal service-listing field.
+    -->
+    <section id="service-list" class="cs-wrapper">
+        {% for service in services %}
+        <article class="cs-service">
+            <h2>{{ service.title }}</h2>
+            {% for paragraph in service.body %}
+            <p>{{ paragraph }}</p>
+            {% endfor %}
+            {% if service.bullets.length %}
+            <ul>
+                {% for bullet in service.bullets %}
+                <li>{{ bullet }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if service.note %}
+            <p class="cs-note">{{ service.note }}</p>
+            {% endif %}
+            <a href="/schedule/" class="cs-button-solid">{{ service.ctaText }}</a>
+        </article>
+        {% endfor %}
+    </section>
+
+    <!-- ============================================ -->
+    <!--        Certifications / Process Standards     -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/standards.js as a
+        list of columns (heading + items). Any number of columns, any number
+        of items per column.
+    -->
+    {% if standards.length %}
+    <section id="driver-standards" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">[TOPPER — e.g. "Trained, Certified & Ready"]</span>
+            <h2>[STANDARDS SECTION HEADING]</h2>
+        </div>
+        <div class="cs-standards-grid">
+            {% for column in standards %}
+            <div class="cs-standards-col">
+                <h3>{{ column.heading }}</h3>
+                <ul>
+                    {% for item in column.items %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ============================================ -->
+    <!--              Service Area                     -->
+    <!-- ============================================ -->
+    <section id="service-area" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">Where We Work</span>
+            <h2>Proudly Serving [SERVICE AREA]</h2>
+        </div>
+        <p class="cs-area-text">{{ client.name }} serves {{ client.address.lineTwo }}.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              Payment Section                  -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/paymentMethods.js.
+        Set that file to an empty array to hide this whole section.
+    -->
+    {% if paymentMethods.length %}
+    <section id="payment-info" class="cs-wrapper">
+        <div class="cs-section-head">
+            <h2>Payment</h2>
+            <p>We accept {{ paymentMethods | join(", ") }}. [OPTIONAL FOLLOW-UP LINE, e.g. "Call to verify coverage/details before booking."]</p>
+        </div>
+        <a href="tel:{{ client.phoneForTel }}" class="cs-button-outline">Call: {{ client.phoneFormatted }}</a>
+    </section>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+---
+title: "Page Not Found | [BUSINESS NAME]"
+description: "The page you're looking for doesn't exist."
+permalink: "/404.html"
+eleventyExcludeFromCollections: true
+---
+
+{% extends "layouts/base.html" %}
+
+{% block body %}
+
+    <section id="not-found" class="cs-wrapper" style="text-align:center; padding: 6rem 1rem;">
+        <h1>Page Not Found</h1>
+        <p>The page you're looking for doesn't exist or may have moved.</p>
+        <a href="/" class="cs-button-solid">Back to Home</a>
+    </section>
+
+{% endblock %}

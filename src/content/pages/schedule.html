@@ -1,0 +1,274 @@
+---
+title: "Schedule a Ride | Book [SERVICE CATEGORY] [SERVICE AREA] | [BUSINESS NAME]"
+description: "Request [SERVICE CATEGORY] in [SERVICE AREA]. Call [PHONE] or use our online form. Available [HOURS SUMMARY]."
+permalink: "/schedule/"
+tags: "sitemap"
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/schedule.css">
+{% endblock %}
+
+{% block body %}
+
+    <!-- ============================================ -->
+    <!--                 Page Hero                     -->
+    <!-- ============================================ -->
+    <section id="schedule-hero" class="cs-wrapper">
+        <h1>[HERO HEADING — e.g. "Schedule Your Ride Today" / "Book Your Session" / "Request a Quote"]</h1>
+        <p>Call us directly, or fill out the form below and we'll confirm your booking promptly.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              Call First Section               -->
+    <!-- ============================================ -->
+    <section id="call-first" class="cs-wrapper">
+        <div class="cs-call-box">
+            <span class="cs-topper">Prefer to Talk?</span>
+            <a href="tel:{{ client.phoneForTel }}" class="cs-phone">{{ client.phoneFormatted }}</a>
+            <p class="cs-hours">{{ client.hours.weekday }}</p>
+            <p class="cs-hours">{{ client.hours.weekend }}</p>
+            <p class="cs-urgent">For same-day or urgent requests, please call rather than using the online form.</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              Booking Form Section             -->
+    <!-- ============================================ -->
+    <section id="booking-form-section" class="cs-wrapper">
+        <div class="cs-section-head">
+            <h2>[FORM SECTION HEADING — e.g. "Request Online"]</h2>
+        </div>
+
+        <form id="ride-request-form" class="cs-form">
+
+            <div class="cs-form-row">
+                <div class="cs-field">
+                    <label for="firstname">First Name *</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+                <div class="cs-field">
+                    <label for="lastname">Last Name *</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+            </div>
+
+            <div class="cs-form-row">
+                <div class="cs-field">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="cs-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email">
+                </div>
+            </div>
+
+            <fieldset class="cs-field">
+                <legend>Preferred Contact Method *</legend>
+                <div class="cs-radio-group">
+                    <label><input type="radio" name="contactmethod" value="Call" required> Call</label>
+                    <label><input type="radio" name="contactmethod" value="Text" required> Text</label>
+                    <label><input type="radio" name="contactmethod" value="Email" required> Email</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="cs-field">
+                <legend>OK to Text You? *</legend>
+                <div class="cs-radio-group">
+                    <label><input type="radio" name="oktotext" value="Yes" required> Yes</label>
+                    <label><input type="radio" name="oktotext" value="No" required> No</label>
+                </div>
+                <p class="cs-sms-disclaimer">If yes, we may text you about your request. Message and data rates may apply. Reply STOP to opt out, HELP for help.</p>
+            </fieldset>
+
+            <div class="cs-form-row">
+                <div class="cs-field">
+                    <!-- See pattern-notes/dual-timezone-email.md — this field and its
+                         EST/CST-only options only apply to a service area that actually
+                         straddles a timezone line. Most future clients won't need this
+                         field at all; see that note before deciding whether to keep it. -->
+                    <label for="timezone">Your Time Zone *</label>
+                    <select id="timezone" name="timezone" required>
+                        <option value="" disabled selected>Select your time zone</option>
+                        <option value="EST">Eastern Time (EST)</option>
+                        <option value="CST">Central Time (CST)</option>
+                    </select>
+                </div>
+                <div class="cs-field">
+                    <!-- Generic repeatable slot — options + field label come from
+                         src/_data/formOptions.js, so this form works for a coaching
+                         business, an irrigation company, a pet-inspection business,
+                         etc. without touching this markup or functions/api/submit.js. -->
+                    <label for="servicetype">{{ formOptions.fieldLabel }} *</label>
+                    <select id="servicetype" name="servicetype" required>
+                        <option value="" disabled selected>Select an option</option>
+                        {% for option in formOptions.serviceTypes %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!--
+                FLAG — distinct from the generic service-type dropdown above:
+                these fields (pickup/destination address, round trip) are
+                inherently shaped for a transportation business. A
+                pet-inspection business needs one service address, not
+                pickup+destination; a coaching business likely needs neither,
+                just a session date/time; an irrigation company might want a
+                single "service address" field instead. This isn't a
+                configurable list like formOptions.js — adapting this form
+                for a non-transportation client means editing these fields
+                directly. See pattern-notes/booking-form-architecture.md for
+                what to change per business type, and what stays the same
+                (the Cloudflare Function + Resend + ICS attachment plumbing
+                underneath is genuinely generic regardless of field set).
+            -->
+            <div class="cs-field">
+                <label for="pickup">Pickup Address *</label>
+                <input type="text" id="pickup" name="pickup" required>
+            </div>
+
+            <div class="cs-field">
+                <label for="destination">Destination (facility name + address) *</label>
+                <input type="text" id="destination" name="destination" required>
+            </div>
+
+            <div class="cs-form-row">
+                <div class="cs-field">
+                    <label for="date">Date Needed *</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="cs-field">
+                    <label for="time">Time Needed *</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+            </div>
+
+            <fieldset class="cs-field">
+                <legend>Round Trip Needed? *</legend>
+                <div class="cs-radio-group">
+                    <label><input type="radio" name="roundtrip" value="Yes" required> Yes</label>
+                    <label><input type="radio" name="roundtrip" value="No" required> No</label>
+                </div>
+            </fieldset>
+
+            <div class="cs-form-row">
+                <div class="cs-field">
+                    <label for="recurring">Recurring?</label>
+                    <select id="recurring" name="recurring">
+                        <option value="One-time" selected>One-time</option>
+                        <option value="Weekly">Weekly (choose days below)</option>
+                        <option value="Monthly">Monthly</option>
+                    </select>
+                </div>
+                <div class="cs-field">
+                    <label for="urgency">Urgency</label>
+                    <select id="urgency" name="urgency">
+                        <option value="Future booking" selected>Future booking</option>
+                        <option value="Next-day">Next-day</option>
+                        <option value="Same-day">Same-day (please call instead)</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="cs-field" id="days-of-week-field" hidden>
+                <legend>Which Days? (select all that apply)</legend>
+                <div class="cs-checkbox-group">
+                    <label><input type="checkbox" name="recurringdays" value="Mon"> Mon</label>
+                    <label><input type="checkbox" name="recurringdays" value="Tue"> Tue</label>
+                    <label><input type="checkbox" name="recurringdays" value="Wed"> Wed</label>
+                    <label><input type="checkbox" name="recurringdays" value="Thu"> Thu</label>
+                    <label><input type="checkbox" name="recurringdays" value="Fri"> Fri</label>
+                    <label><input type="checkbox" name="recurringdays" value="Sat"> Sat</label>
+                </div>
+            </fieldset>
+
+            <div class="cs-field">
+                <label for="referralsource">How did you hear about us?</label>
+                <select id="referralsource" name="referralsource">
+                    <option value="" disabled selected>Select one</option>
+                    {% for source in formOptions.referralSources %}
+                    <option value="{{ source }}">{{ source }}</option>
+                    {% endfor %}
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="cs-field">
+                <label for="notes">Special Notes or Assistance Needed</label>
+                <textarea id="notes" name="notes" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="cs-button-solid cs-submit">[SUBMIT BUTTON TEXT — e.g. "Request My Ride" / "Book This Session" / "Send Request"]</button>
+
+            <div id="form-success" class="cs-form-message cs-success" hidden>
+                <p><strong>Thank you!</strong> Your request has been received. We will contact you within 1-2 hours during business hours to confirm availability and finalize your booking.</p>
+                <p>For urgent or same-day needs, please call us directly at <a href="tel:{{ client.phoneForTel }}">{{ client.phoneFormatted }}</a>.</p>
+            </div>
+
+            <div id="form-error" class="cs-form-message cs-error" hidden>
+                <p>Something went wrong submitting your request. Please call us directly at <a href="tel:{{ client.phoneForTel }}">{{ client.phoneFormatted }}</a> so we can help right away.</p>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- ============================================ -->
+    <!--              Payment Information              -->
+    <!-- ============================================ -->
+    {% if paymentMethods.length %}
+    <section id="schedule-payment" class="cs-wrapper">
+        <h2>Payment</h2>
+        <p>We accept {{ paymentMethods | join(", ") }}. [OPTIONAL FOLLOW-UP LINE.]</p>
+        <a href="tel:{{ client.phoneForTel }}" class="cs-phone">{{ client.phoneFormatted }}</a>
+    </section>
+    {% endif %}
+
+    <script>
+        // Show day-of-week checkboxes only when "Weekly" is selected
+        const recurringSelect = document.getElementById('recurring');
+        const daysField = document.getElementById('days-of-week-field');
+        recurringSelect.addEventListener('change', function () {
+            daysField.hidden = (this.value !== 'Weekly');
+        });
+
+        document.getElementById('ride-request-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('.cs-submit');
+            const successMsg = document.getElementById('form-success');
+            const errorMsg = document.getElementById('form-error');
+
+            successMsg.hidden = true;
+            errorMsg.hidden = true;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    body: new FormData(form),
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    form.reset();
+                    successMsg.hidden = false;
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    errorMsg.hidden = false;
+                }
+            } catch (err) {
+                errorMsg.hidden = false;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '[SUBMIT BUTTON TEXT — must match the button label above]';
+            }
+        });
+    </script>
+
+{% endblock %}

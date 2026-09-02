@@ -1,0 +1,88 @@
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "{{ client.schemaType }}",
+        "name": "{{ client.name }}",
+        {% if client.serviceAreas.length %}
+        "areaServed": [
+            {% for area in client.serviceAreas %}
+            {"@type": "AdministrativeArea", "name": "{{ area }}"}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        {% endif %}
+        {% if client.hoursSchema.length %}
+        "openingHoursSpecification": [
+            {% for block in client.hoursSchema %}
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [{% for day in block.days %}"{{ day }}"{% if not loop.last %},{% endif %}{% endfor %}],
+                "opens": "{{ block.opens }}",
+                "closes": "{{ block.closes }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        {% endif %}
+        {% if preloadImg %}"image": "{{ client.domain }}{{ preloadImg }}",{% endif %}
+        {% if client.phoneFormatted %}"telephone": "{{ client.phoneFormatted }}",{% endif %}
+        {% if client.email %}"email": "{{ client.email }}",{% endif %}
+        {% if client.address %}
+            "address": {
+                "@type": "PostalAddress" {%- if client.address.lineOne -%},
+                    "streetAddress": "{{ client.address.lineOne }}{% if client.address.lineTwo %}, {{ client.address.lineTwo }}{% endif %}"
+                {%- endif -%}
+                {%- if client.address.city -%},
+                    "addressLocality": "{{ client.address.city }}"
+                {%- endif -%}
+                {%- if client.address.state -%},
+                    "addressRegion": "{{ client.address.state }}"
+                {%- endif -%}
+                {%- if client.address.zip -%},
+                    "postalCode": "{{ client.address.zip }}"
+                {%- endif -%}
+                {%- if client.address.country -%},
+                    "addressCountry": "{{ client.address.country }}"
+                {%- endif -%}
+            },
+        {% endif %}
+        {% if client.domain and page.url %}"url": "{{ client.domain }}{{ page.url }}",{% endif %}
+        {% if client.socials %}
+            "sameAs": [{%- for platform, url in client.socials -%}
+                    {% if not loop.first %},{% endif %}"{{ url }}"
+                {%- endfor -%}]
+        {% endif %}
+        {% if testimonials.length %}
+        ,"review": [
+            {% for item in testimonials %}
+            {
+                "@type": "Review",
+                "reviewBody": {{ item.quote | jsonSafe | safe }},
+                "author": {"@type": "Person", "name": {{ item.name | jsonSafe | safe }}}
+                {%- if item.rating %},
+                "reviewRating": {"@type": "Rating", "ratingValue": {{ item.rating }}, "bestRating": 5}
+                {%- endif %}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+        {% endif %}
+    }
+</script>
+{% if faq.length %}
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {% for item in faq %}
+            {
+                "@type": "Question",
+                "name": {{ item.question | jsonSafe | safe }},
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ item.answer | jsonSafe | safe }}
+                }
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+</script>
+{% endif %}

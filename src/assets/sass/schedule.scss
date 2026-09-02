@@ -1,0 +1,221 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// SCHEDULE PAGE — booking form
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media only screen and (min-width: 0px) {
+	#schedule-hero {
+		padding: clamp(7rem, 20vw, 9rem) 1rem clamp(2rem, 5vw, 3rem);
+		text-align: center;
+
+		h1 {
+			font-family: var(--headerFont);
+			color: var(--navy);
+			font-size: clamp(2rem, 5vw, 3rem);
+			margin-bottom: 0.5rem;
+		}
+
+		p {
+			color: var(--bodyTextColor);
+			font-size: clamp(1rem, 2vw, 1.1rem);
+		}
+	}
+
+	#call-first {
+		padding: 0 1rem clamp(2rem, 5vw, 3rem);
+	}
+
+	.cs-call-box {
+		background: var(--lightBlue);
+		border-radius: 0.75rem;
+		padding: clamp(1.5rem, 4vw, 2.5rem);
+		text-align: center;
+
+		.cs-topper {
+			color: var(--blue);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			font-size: 0.85rem;
+			display: block;
+			margin-bottom: 0.5rem;
+		}
+
+		.cs-phone {
+			font-family: var(--headerFont);
+			font-weight: 700;
+			font-size: clamp(1.75rem, 4vw, 2.25rem);
+			color: var(--navy);
+			text-decoration: none;
+			display: block;
+			margin-bottom: 0.5rem;
+
+			&:hover { color: var(--teal); }
+		}
+
+		.cs-hours {
+			font-size: 0.9rem;
+			color: var(--bodyTextColor);
+			margin-bottom: 0.25rem;
+		}
+
+		.cs-urgent {
+			font-size: 0.85rem;
+			font-style: italic;
+			color: var(--blue);
+			margin-top: 0.75rem;
+		}
+	}
+
+	#booking-form-section {
+		padding: 0 1rem clamp(3rem, 6vw, 4rem);
+		max-width: 44rem;
+	}
+
+	.cs-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.cs-form-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+
+	.cs-field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		border: none;
+		padding: 0;
+		margin: 0;
+
+		label, legend {
+			font-size: 0.9rem;
+			font-weight: 600;
+			color: var(--navy);
+			padding: 0;
+		}
+
+		input[type="text"],
+		input[type="tel"],
+		input[type="email"],
+		input[type="date"],
+		input[type="time"],
+		select,
+		textarea {
+			font-family: var(--bodyFont);
+			font-size: 1rem;
+			padding: 0.7rem 0.85rem;
+			border: 1px solid #cdd7dd;
+			border-radius: 0.5rem;
+			background: #fff;
+			color: var(--bodyTextColor);
+
+			&:focus {
+				outline: none;
+				border-color: var(--teal);
+				box-shadow: 0 0 0 3px rgba(63,166,166,0.15);
+			}
+		}
+
+		textarea {
+			resize: vertical;
+		}
+	}
+
+	.cs-radio-group,
+	.cs-checkbox-group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+
+		label {
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
+			font-weight: 500;
+			color: var(--bodyTextColor);
+		}
+
+		input[type="radio"],
+		input[type="checkbox"] {
+			accent-color: var(--teal);
+			width: 1.1rem;
+			height: 1.1rem;
+		}
+	}
+
+	.cs-sms-disclaimer {
+		font-size: 0.78rem;
+		color: #6b7680;
+		margin-top: 0.4rem;
+	}
+
+	.cs-submit {
+		align-self: flex-start;
+		border: none;
+		cursor: pointer;
+	}
+
+	.cs-form-message {
+		border-radius: 0.5rem;
+		padding: 1.25rem;
+		font-size: 0.95rem;
+		line-height: 1.6;
+
+		p { margin-bottom: 0.5rem; }
+		p:last-child { margin-bottom: 0; }
+	}
+
+	.cs-success {
+		background: var(--successBg);
+		border: 1px solid var(--teal);
+		color: var(--navy);
+
+		a { color: var(--blue); font-weight: 600; }
+	}
+
+	.cs-error {
+		background: var(--errorBg);
+		border: 1px solid var(--errorBorder);
+		color: var(--errorText);
+
+		a { color: var(--errorText); font-weight: 600; }
+	}
+
+	#schedule-payment {
+		padding: 0 1rem clamp(3rem, 6vw, 4rem);
+		text-align: center;
+
+		h2 {
+			font-family: var(--headerFont);
+			color: var(--navy);
+			font-size: clamp(1.4rem, 3vw, 1.8rem);
+			margin-bottom: 0.75rem;
+		}
+
+		p {
+			max-width: 34rem;
+			margin: 0 auto 1rem;
+			color: var(--bodyTextColor);
+		}
+
+		.cs-phone {
+			font-family: var(--headerFont);
+			font-weight: 700;
+			color: var(--teal);
+			text-decoration: none;
+
+			&:hover { color: var(--navy); }
+		}
+	}
+}
+
+/* Tablet+ — two-column form rows */
+@media only screen and (min-width: 40rem) {
+	.cs-form-row {
+		grid-template-columns: 1fr 1fr;
+	}
+}

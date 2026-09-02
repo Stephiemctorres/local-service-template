@@ -1,0 +1,44 @@
+<!-- ============================================ -->
+<!--                 Navigation                   -->
+<!-- ============================================ -->
+
+<header id="cs-navigation">
+    <div class="cs-container">
+        <!--Nav Logo-->
+        <a href="/" class="cs-logo" aria-label="{{ client.name }} Home page">
+            <img src="/assets/images/cold-logo-header.png" alt="{{ client.name }}" width="279" height="119" decoding="async">
+        </a>
+        <!--Navigation List-->
+        <nav class="cs-nav" aria-label="main navigation">
+            <!--Mobile Nav Toggle-->
+            <button class="cs-toggle" id="cs-toggle" aria-expanded="false" aria-controls="cs-ul-wrapper" aria-label="mobile menu toggle" aria-haspopup="menu">
+                <span class="cs-box" aria-hidden="true">
+                    <span class="cs-line cs-line1" aria-hidden="true"></span>
+                    <span class="cs-line cs-line2" aria-hidden="true"></span>
+                    <span class="cs-line cs-line3" aria-hidden="true"></span>
+                </span>
+            </button>
+            <div class="cs-ul-wrapper" id="cs-ul-wrapper" inert>
+                <ul id="cs-expanded" class="cs-ul">
+                    <li class="cs-li">
+                        <a href="/" class="cs-li-link {% if page.url == "/" %} cs-active {% endif %}" {% if page.url == "/" %} aria-current="page" {% endif %}>
+                            Home
+                        </a>
+                    </li>
+                    <li class="cs-li">
+                        <a href="/services/" class="cs-li-link {% if page.url == "/services/" %} cs-active {% endif %}" {% if page.url == "/services/" %} aria-current="page" {% endif %}>
+                            Services
+                        </a>
+                    </li>
+                    <li class="cs-li cs-hide-on-desktop">
+                        <a href="/schedule/" class="cs-li-link {% if page.url == "/schedule/" %} cs-active {% endif %}" {% if page.url == "/schedule/" %} aria-current="page" {% endif %}>
+                            Schedule a Ride
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--Desktop CTA-->
+        <a href="/schedule/" class="cs-button-solid cs-nav-button cs-hide-on-mobile">Schedule a Ride</a>
+    </div>
+</header>

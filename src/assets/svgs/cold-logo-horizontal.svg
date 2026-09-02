@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" viewBox="0 0 1350 225" height="300">
+  <!-- PLACEHOLDER LOGO — full-color horizontal mark. Replace with client's real logo. -->
+  <rect x="10" y="10" width="1330" height="205" rx="20" fill="none" stroke="#3FA6A6" stroke-width="6" stroke-dasharray="24 16"/>
+  <text x="675" y="130" font-family="Arial, sans-serif" font-size="90" font-weight="700" fill="#0B2D4D" text-anchor="middle">YOUR LOGO</text>
+</svg>

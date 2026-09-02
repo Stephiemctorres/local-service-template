@@ -1,0 +1,258 @@
+---
+title: "[SERVICE CATEGORY] in [SERVICE AREA] | [BUSINESS NAME]"
+description: "[BUSINESS NAME] provides [SERVICE CATEGORY] in [SERVICE AREA]. Available [HOURS SUMMARY]. Call [PHONE]."
+permalink: "/"
+tags: "sitemap"
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/critical.css" />
+
+    {% if client.isProduction %}
+        <link rel="preload" href="/assets/css/local.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript>
+            <link rel="stylesheet" href="/assets/css/local.css">
+        </noscript>
+    {% else %}
+        <link rel="stylesheet" href="/assets/css/local.css" />
+    {% endif %}
+
+    {% set preloadImg = "/assets/images/cold-vehicle-1600.webp" %}
+    {% include "components/home-schema.html" %}
+{% endblock %}
+
+{% block body %}
+
+    <!-- ============================================ -->
+    <!--                    Hero                       -->
+    <!-- ============================================ -->
+    <section id="hero-home">
+        <div class="cs-background" aria-hidden="true">
+            <picture>
+                <source srcset="/assets/images/cold-vehicle-1600.webp" media="(min-width: 768px)">
+                <img src="/assets/images/cold-vehicle-800.webp" alt="" loading="eager" decoding="async">
+            </picture>
+        </div>
+        <div class="cs-container">
+            <span class="cs-topper">[SHORT TOPPER — e.g. "Safe · Reliable · Professional"]</span>
+            <h1 class="cs-title">[SERVICE CATEGORY] in [SERVICE AREA]</h1>
+            <!--
+                Flexible founder/ownership line — works for one owner, two, a
+                team, or "no ownership story worth telling" (in which case,
+                delete this line entirely rather than force one). Doesn't
+                assume a specific structure the way the original NEMT copy
+                did ("Family-owned and operated by [X] & [Y]").
+            -->
+            <p class="cs-text">Founded by {{ client.owners }}. [ONE SENTENCE ON THE CORE SERVICE-DELIVERY PROMISE — e.g. what the client can expect, in this business's own words, not a generic industry phrase.]</p>
+            <a href="tel:{{ client.phoneForTel }}" class="cs-phone-cta" aria-label="Call {{ client.phoneFormatted }}">
+                <img src="/assets/svgs/icon-phone.svg" alt="" aria-hidden="true">
+                {{ client.phoneFormatted }}
+            </a>
+            <div class="cs-button-group">
+                <a href="/schedule/" class="cs-button-solid">[PRIMARY CTA — e.g. "Schedule a Ride" / "Book a Session" / "Request a Quote"]</a>
+                <a href="/services/" class="cs-button-outline" style="color:#fff;border-color:#fff;">See Our Services</a>
+            </div>
+            <span class="cs-supporting">[SHORT SUPPORTING LINE — e.g. hours, guarantee, or delete]</span>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--                Trust Badges                   -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/trustBadges.js.
+        Delete this whole <section> for a client with no credentials worth
+        badge-listing (e.g. a portfolio site).
+    -->
+    {% if trustBadges.length %}
+    <section id="trust-badges" aria-label="Certifications and standards">
+        <ul>
+            {% for badge in trustBadges %}
+            <li>{{ badge }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
+    <!-- ============================================ -->
+    <!--              Services Overview                -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/services.js.
+        Any number of cards; each pulls its icon/title/teaser from that file.
+        Full detail for each service lives on the services page, which loops
+        over the same data source so the two pages never drift out of sync.
+    -->
+    <section id="services-overview" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">What We Offer</span>
+            <h2>[SERVICES OVERVIEW HEADING]</h2>
+        </div>
+        <div class="cs-grid">
+            {% for service in services %}
+            <div class="cs-card">
+                {% if service.icon %}<img src="{{ service.icon }}" alt="" aria-hidden="true">{% endif %}
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.teaser }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--               Differentiators                 -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/differentiators.js.
+        Any number of cards. "Family-operated" is just one POSSIBLE card a
+        client might include, not a structural assumption — see the comments
+        in that data file.
+    -->
+    <section id="differentiators" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">[TOPPER — e.g. "Why Clients Choose Us"]</span>
+            <h2>What Makes Us Different</h2>
+        </div>
+        <div class="cs-grid">
+            {% for item in differentiators %}
+            <div class="cs-item">
+                {% if item.icon %}<div class="cs-icon-wrap"><img src="{{ item.icon }}" alt="" aria-hidden="true"></div>{% endif %}
+                <div>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.text }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--                   About                       -->
+    <!-- ============================================ -->
+    <section id="about-cold">
+        <div class="cs-container">
+            <div class="cs-picture">
+                <img src="/assets/images/couple-portrait-800.webp" alt="[TEAM PHOTO PLACEHOLDER — replace with a real photo and update this alt text to describe it, e.g. 'Jane and John Doe, owners of Business Name']" loading="lazy" decoding="async" width="800" height="1202">
+            </div>
+            <div class="cs-content">
+                <span class="cs-topper">About Us</span>
+                <h2>[ABOUT SECTION HEADING]</h2>
+                <p>{{ client.legalName }} is owned and operated by {{ client.owners }}. We proudly serve {{ client.address.lineOne }}, providing [SERVICE CATEGORY] to [WHO THE CLIENT SERVES / WHAT THEY NEED].</p>
+                <!--
+                    Voice example, not hardcoded copy: the original NEMT build
+                    used "We treat every client like family..." as its warm,
+                    personal tone. That specific line is documented as a style
+                    reference in pattern-notes/differentiators-voice.md — a
+                    future client writes their OWN version of a warm, personal
+                    line here; this isn't a line every client should reuse.
+                -->
+                <p>[ONE OR TWO SENTENCES IN THE CLIENT'S OWN VOICE — warm and personal if that fits the business, more formal if it doesn't. See pattern-notes/differentiators-voice.md for a worked example, not a template to copy verbatim.]</p>
+                <a href="/schedule/" class="cs-button-solid">[ABOUT SECTION CTA]</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!--         Process / Quality Standards Accordion  -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/processAccordion.js.
+        Delete this whole <section> for a client that doesn't need this level
+        of process detail on the home page.
+    -->
+    {% if processAccordion.length %}
+    <section id="vehicle-standards" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">[TOPPER — e.g. "Every Visit, Every Time"]</span>
+            <h2>[ACCORDION SECTION HEADING]</h2>
+        </div>
+        <div class="cs-accordion">
+            {% for entry in processAccordion %}
+            <details>
+                <summary>{{ entry.title }}</summary>
+                <p class="cs-accordion-body">{{ entry.text }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ============================================ -->
+    <!--               Testimonials                    -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/testimonials.js.
+        Ships empty by default and stays invisible until real testimonials
+        are added — see the comments in that file for why. Nothing else
+        needs to change to "turn this on" for a new client once they have
+        real reviews to add.
+    -->
+    {% if testimonials.length %}
+    <section id="testimonials" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">What Clients Say</span>
+            <h2>[TESTIMONIALS SECTION HEADING]</h2>
+        </div>
+        <div class="cs-grid">
+            {% for item in testimonials %}
+            <blockquote class="cs-testimonial">
+                <p>&ldquo;{{ item.quote }}&rdquo;</p>
+                <footer>
+                    <cite>{{ item.name }}</cite>{% if item.context %}, <span>{{ item.context }}</span>{% endif %}
+                </footer>
+            </blockquote>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ============================================ -->
+    <!--                    FAQ                        -->
+    <!-- ============================================ -->
+    <!--
+        Generic repeatable slot — data lives in src/_data/faq.js. Also drives
+        the FAQPage structured data in components/home-schema.html. This
+        section is the single highest-value GEO/AEO asset on the site — see
+        pattern-notes/geo-aeo-answer-copy.md.
+    -->
+    {% if faq.length %}
+    <section id="faq" class="cs-wrapper">
+        <div class="cs-section-head">
+            <span class="cs-topper">Questions</span>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="cs-accordion">
+            {% for item in faq %}
+            <details>
+                <summary>{{ item.question }}</summary>
+                <p class="cs-accordion-body">{{ item.answer }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- ============================================ -->
+    <!--               Contact Strip                   -->
+    <!-- ============================================ -->
+    <section id="contact-strip">
+        <div class="cs-container">
+            <div class="cs-content-left">
+                <h2>[CONTACT STRIP HEADING — e.g. "Ready to Get Started?"]</h2>
+                <a href="tel:{{ client.phoneForTel }}" class="cs-phone">{{ client.phoneFormatted }}</a>
+                <p class="cs-meta">{{ client.hours.weekday }}</p>
+                <p class="cs-meta">{{ client.hours.weekend }}</p>
+            </div>
+            <div class="cs-content-right">
+                <p class="cs-meta"><strong>Serving:</strong> {{ client.address.lineTwo }}</p>
+                {% if paymentMethods.length %}
+                <p class="cs-meta"><strong>Payment:</strong> {{ paymentMethods | join(", ") }}</p>
+                {% endif %}
+                <a href="/schedule/" class="cs-button-solid">[CONTACT STRIP CTA] &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

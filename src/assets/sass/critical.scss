@@ -1,0 +1,102 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// CRITICAL PAGE STYLES — Home page hero (above-the-fold, loads immediately)
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media only screen and (min-width: 0px) {
+	#hero-home {
+		/* fluid top padding accounts for fixed mobile header height */
+		padding: clamp(7rem, 22vw, 10rem) 1rem clamp(3rem, 8vw, 5rem);
+		position: relative;
+		overflow: hidden;
+
+		.cs-background {
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center 65%;
+			}
+
+			&:before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(160deg, rgba(11,45,77,0.94) 0%, rgba(18,91,110,0.85) 100%);
+				z-index: 1;
+			}
+		}
+
+		.cs-container {
+			width: 100%;
+			max-width: calc(1280 / 16 * 1rem);
+			margin: 0 auto;
+			position: relative;
+			z-index: 2;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.cs-topper {
+			color: var(--teal);
+		}
+
+		.cs-title {
+			/* fluid — scales continuously, no breakpoint jump */
+			font-size: clamp(2rem, 5.5vw, 3.5rem);
+			color: #fff;
+			max-width: 45rem;
+			font-family: var(--headerFont);
+			margin: 0 auto;
+		}
+
+		.cs-text {
+			color: rgba(255,255,255,0.9);
+			max-width: 34rem;
+			font-size: clamp(1rem, 2vw, 1.2rem);
+			margin: 0 auto clamp(1.5rem, 4vw, 2rem);
+		}
+
+		.cs-phone-cta {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.6rem;
+			font-family: var(--headerFont);
+			font-weight: 700;
+			font-size: clamp(1.5rem, 4vw, 2.1rem);
+			color: #fff;
+			text-decoration: none;
+			margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+
+			img { width: clamp(1.25rem, 3vw, 1.5rem); height: auto; }
+
+			&:hover { color: var(--teal); }
+		}
+
+		.cs-button-group {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 1rem;
+			margin-bottom: clamp(1.5rem, 4vw, 2rem);
+		}
+
+		.cs-supporting {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: clamp(0.9rem, 1.8vw, 1rem);
+			font-weight: 600;
+			color: var(--teal);
+			background: rgba(255,255,255,0.08);
+			border: 1px solid rgba(255,255,255,0.2);
+			border-radius: 999px;
+			padding: 0.5rem 1rem;
+		}
+	}
+}

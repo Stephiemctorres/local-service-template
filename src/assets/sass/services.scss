@@ -1,0 +1,188 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// SERVICES PAGE
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media only screen and (min-width: 0px) {
+	#services-hero {
+		padding: clamp(7rem, 20vw, 9rem) 1rem clamp(2.5rem, 6vw, 3.5rem);
+		text-align: center;
+
+		.cs-topper {
+			color: var(--teal);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+			display: block;
+			margin-bottom: 0.5rem;
+		}
+
+		h1 {
+			font-family: var(--headerFont);
+			color: var(--navy);
+			font-size: clamp(2rem, 5vw, 3rem);
+			max-width: 40rem;
+			margin: 0 auto 0.75rem;
+		}
+
+		.cs-subtext {
+			color: var(--bodyTextColor);
+			font-size: clamp(1rem, 2vw, 1.15rem);
+			margin-bottom: 1.25rem;
+		}
+
+		.cs-phone {
+			font-family: var(--headerFont);
+			font-weight: 700;
+			font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+			color: var(--teal);
+			text-decoration: none;
+
+			&:hover { color: var(--navy); }
+		}
+	}
+
+	#service-list {
+		padding: var(--sectionPadding);
+		display: flex;
+		flex-direction: column;
+		gap: clamp(2rem, 5vw, 3rem);
+		max-width: 46rem;
+		margin: 0 auto;
+	}
+
+	.cs-service {
+		border-bottom: 1px solid #e2e8ec;
+		padding-bottom: clamp(2rem, 5vw, 3rem);
+		text-align: center;
+
+		&:last-child {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+
+		h2 {
+			font-family: var(--headerFont);
+			color: var(--navy);
+			font-size: clamp(1.4rem, 3vw, 1.9rem);
+			margin-bottom: 0.75rem;
+		}
+
+		p,
+		ul,
+		.cs-loyalty {
+			text-align: left;
+		}
+
+		p {
+			font-size: 1rem;
+			line-height: 1.7;
+			color: var(--bodyTextColor);
+			margin-bottom: 0.9rem;
+			max-width: 42rem;
+		}
+
+		ul {
+			margin: 0 0 1rem;
+			padding-left: 1.25rem;
+
+			li {
+				font-size: 0.95rem;
+				line-height: 1.6;
+				color: var(--bodyTextColor);
+				margin-bottom: 0.4rem;
+			}
+		}
+
+		.cs-loyalty {
+			background: var(--lightBlue);
+			border-radius: 0.5rem;
+			padding: 1rem 1.25rem;
+			max-width: 42rem;
+		}
+
+		.cs-note {
+			font-size: 0.9rem;
+			font-style: italic;
+			color: var(--blue);
+		}
+	}
+
+	#driver-standards {
+		padding: var(--sectionPadding);
+		background: var(--lightBlue);
+	}
+
+	.cs-standards-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+	}
+
+	.cs-standards-col {
+		background: #fff;
+		border-radius: 0.75rem;
+		padding: clamp(1.5rem, 3vw, 2rem);
+
+		h3 {
+			font-family: var(--headerFont);
+			color: var(--navy);
+			font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+			margin-bottom: 1rem;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			display: flex;
+			align-items: flex-start;
+			gap: 0.5rem;
+			font-size: 0.95rem;
+			color: var(--bodyTextColor);
+			margin-bottom: 0.6rem;
+
+			&:before {
+				content: "";
+				width: 0.4rem;
+				height: 0.4rem;
+				border-radius: 50%;
+				background: var(--teal);
+				flex-shrink: 0;
+				margin-top: 0.5rem;
+			}
+		}
+	}
+
+	#service-area {
+		padding: var(--sectionPadding);
+		text-align: center;
+	}
+
+	.cs-area-text {
+		max-width: 40rem;
+		margin: 0 auto;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--bodyTextColor);
+	}
+
+	#payment-info {
+		padding: var(--sectionPadding);
+		text-align: center;
+		background: var(--navy);
+
+		.cs-section-head h2 { color: #fff; }
+		.cs-section-head p { color: rgba(255,255,255,0.8); }
+	}
+}
+
+/* Tablet+ — standards go two columns */
+@media only screen and (min-width: 48rem) {
+	.cs-standards-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
